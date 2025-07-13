@@ -2,60 +2,70 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>맞춤형 기능성 식품 추천</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>기능성식품 안내</title>
 <style>
-  body { font-family: Arial, sans-serif; max-width: 700px; margin: auto; padding: 20px; }
-  select, button { margin-top: 10px; padding: 8px; }
-  .product { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; }
-  img { max-width: 150px; display: block; margin-top: 5px; }
+  body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+  h1 { color: #2c3e50; }
+  table { border-collapse: collapse; width: 100%; background: #fff; }
+  th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+  th { background-color: #3498db; color: white; }
+  tr:hover { background-color: #f1f1f1; }
 </style>
 </head>
 <body>
-<h1>맞춤형 기능성 식품 추천</h1>
-<p>건강 목표를 선택하면 관련 제품을 추천해 드립니다.</p>
 
-<select id="goal">
-  <option value="">-- 건강 목표 선택 --</option>
-  <option value="immunity">면역력 강화</option>
-  <option value="heart">혈행 개선</option>
-</select>
-<button onclick="showProducts()">추천 받기</button>
+<h1>기능성식품 안내</h1>
 
-<div id="result"></div>
+<table>
+  <thead>
+    <tr>
+      <th>제품명</th>
+      <th>기능성 내용</th>
+      <th>제조사</th>
+      <th>유통기한</th>
+    </tr>
+  </thead>
+  <tbody id="productTableBody">
+    <!-- JS가 여기에 데이터 삽입 -->
+  </tbody>
+</table>
 
 <script>
-// 제품 데이터 (JavaScript 변수에 하드코딩)
+// 예시 데이터 (실제로는 크롤링 혹은 API로 받아와야 함)
 const products = [
-  {name: "홍삼정 에브리타임", function: "면역력 증진, 피로 개선", goal: "immunity", image: "https://via.placeholder.com/150?text=홍삼"},
-  {name: "프로바이오틱스 유산균", function: "장 건강, 면역력 강화", goal: "immunity", image: "https://via.placeholder.com/150?text=유산균"},
-  {name: "오메가-3 캡슐", function: "혈중 중성지질 개선, 혈행 개선", goal: "heart", image: "https://via.placeholder.com/150?text=오메가3"}
+  {
+    name: "홍삼정 에브리타임",
+    function: "면역력 증진, 피로 개선",
+    manufacturer: "정관장",
+    expiration: "2025-12-31"
+  },
+  {
+    name: "프로바이오틱스 골드",
+    function: "장 건강 개선",
+    manufacturer: "락토핏",
+    expiration: "2024-08-15"
+  },
+  {
+    name: "오메가3 플러스",
+    function: "혈행 개선, 기억력 개선",
+    manufacturer: "뉴트리코어",
+    expiration: "2025-03-01"
+  }
 ];
 
-function showProducts() {
-  const goal = document.getElementById("goal").value;
-  const resultDiv = document.getElementById("result");
-  if (!goal) {
-    resultDiv.innerHTML = "<p>건강 목표를 선택해주세요.</p>";
-    return;
-  }
-  const filtered = products.filter(p => p.goal === goal);
-  if (filtered.length === 0) {
-    resultDiv.innerHTML = "<p>해당 목표에 맞는 제품이 없습니다.</p>";
-    return;
-  }
-  let html = "";
-  filtered.forEach(p => {
-    html += `
-      <div class="product">
-        <strong>${p.name}</strong><br/>
-        기능성: ${p.function}<br/>
-        <img src="${p.image}" alt="${p.name} 이미지">
-      </div>
-    `;
-  });
-  resultDiv.innerHTML = html;
-}
+const tbody = document.getElementById('productTableBody');
+products.forEach(product => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${product.name}</td>
+    <td>${product.function}</td>
+    <td>${product.manufacturer}</td>
+    <td>${product.expiration}</td>
+  `;
+  tbody.appendChild(row);
+});
 </script>
+
 </body>
 </html>
